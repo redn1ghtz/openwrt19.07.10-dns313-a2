@@ -50,7 +50,7 @@
 sudo apt update
 sudo apt install python3 e2fsprogs device-tree-compiler util-linux fdisk
 git clone https://github.com/redn1ghtz/openwrt19.07.10-dns313-a2.git
-cd ~/openwrt19.07.10-dns313-a2
+cd openwrt19.07.10-dns313-a2
 ```
 
 Для сборки требуются `python3`, `debugfs`, `e2fsck`, `fdtget`, `fdtput`, `mkswap`. Для последующих операций с HDD нужны `lsblk`, `fdisk`, `mkfs.ext4`, `resize2fs` (последний для этой схемы обычно не нужен).
@@ -66,6 +66,8 @@ curl https://downloads.openwrt.org/releases/19.07.10/targets/gemini/generic/open
 ```bash
 gunzip openwrt-19.07.10-gemini-dlink_dns-313-ext4-factory.bin.gz
 ```
+
+Эти файлы должны быть в одной папке:
 
 ```text
 build_dns313_a2_openwrt.py
