@@ -228,22 +228,37 @@ ls -ld /mnt/sda1/Public
 В веб-интерфейсе перейдите к разделу Services -> Network Shares
 
 Заполните поля:
+
 **Interfaces -> lan**
+
 **WORKGROUP -> WORKGROUP**
+
 **Description -> любое описание**
+
 **Allow legacy (insecure) -> выключено**
 
 Shared Directories -> Add:
+
 **Name -> Data**
+
 **Path -> mnt/sda1/Public**
+
 **Browseable -> включено**
+
 **Read-only -> выключено**
+
 **Force Root -> выключено**
+
 **Allowed users -> оставьте пустым**
+
 **Allow guests -> включено**
+
 **Inherit owner -> выключено**
+
 **Hide dot files -> включено**
+
 **Create mask -> 0666**
+
 **Directory mask -> 0777**
 
 В Windows откройте в проводнике `\\IP_АДРЕС_NAS\Data`, подставив текущий IP устройства. Если Windows блокирует гостевой доступ, безопаснее настроить SMB-пользователя, а не ослаблять политику безопасности Windows.
