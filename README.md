@@ -9,8 +9,7 @@
 * [7. Создание раздела данных](#chapter-6)
 * [8. Установка и настройка остановки HDD при простое (hd-idle)](#chapter-7)
 * [9. Установка и настройка SMB-сервера ksmbd](#chapter-8)
-* [10. Создание общей папки и конфигурация ksmbd](#chapter-9)
-* [11. Установка из локальной папки `packages`, если репозиторий недоступен](#chapter-10)
+* [10. Установка из локальной папки `packages`, если репозиторий недоступен](#chapter-9)
 
 <a id="chapter-0"></a>
 ## 1. Назначение
@@ -177,6 +176,8 @@ cat /etc/config/fstab
 ```sh
 opkg update
 opkg install hd-idle
+/etc/init.d/hd-idle enable
+/etc/init.d/hd-idle restart
 ```
 
 Для управления через LuCI, дополнительно:
@@ -185,14 +186,7 @@ opkg install hd-idle
 opkg install luci-app-hd-idle
 ```
 
-Если `opkg` сообщает `Unknown package`, проверьте доступность репозитория и совместимость пакета; не устанавливайте произвольный `.ipk` от другой архитектуры или версии OpenWrt. Наличие `luci-app-hd-idle` необязательно для работы самого `hd-idle`.
-
-```sh
-/etc/init.d/hd-idle enable
-/etc/init.d/hd-idle restart
-```
-
-Обновите страницу OpenWrt и перейдите в Services -> HDD Idle.
+Перезагрузите NAS, зайдите в веб-интерфейс OpenWrt и перейдите в Services -> HDD Idle.
 
 Установите галочку 'Enable'
 
@@ -221,9 +215,8 @@ opkg install kmod-fs-ksmbd ksmbd-server ksmbd-utils
 ```sh
 opkg install luci-app-ksmbd
 ```
-
-<a id="chapter-9"></a>
-### 10. Создание общей папки и конфигурация ksmbd
+Перезагрузите NAS, зайдите в веб-интерфейс OpenWrt и подключитесь по SSH.
+Создайте папку и назанчьте владельца:
 
 ```sh
 mkdir -p /mnt/sda1/Public
@@ -235,30 +228,30 @@ ls -ld /mnt/sda1/Public
 В веб-интерфейсе перейдите к разделу Services -> Network Shares
 
 Заполните поля:
-'Interfaces' -> lan
-'WORKGROUP' -> WORKGROUP
-'Description' -> любое описание
-'Allow legacy (insecure)' -> выключено
+**Interfaces -> lan**
+**WORKGROUP -> WORKGROUP**
+**Description -> любое описание**
+**Allow legacy (insecure) -> выключено**
 
 Shared Directories -> Add:
-'Name' -> Data
-'Path' -> mnt/sda1/Public
-'Browseable' -> включено
-'Read-only' -> выключено
-'Force Root' -> выключено
-'Allowed users' -> оставьте пустым
-'Allow guests' -> включено
-'Inherit owner' -> выключено
-'Hide dot files' -> включено
-'Create mask' -> 0666
-'Directory mask' -> 0777
+**Name -> Data**
+**Path -> mnt/sda1/Public**
+**Browseable -> включено**
+**Read-only -> выключено**
+**Force Root -> выключено**
+**Allowed users -> оставьте пустым**
+**Allow guests -> включено**
+**Inherit owner -> выключено**
+**Hide dot files -> включено**
+**Create mask -> 0666**
+**Directory mask -> 0777**
 
 В Windows откройте в проводнике `\\IP_АДРЕС_NAS\Data`, подставив текущий IP устройства. Если Windows блокирует гостевой доступ, безопаснее настроить SMB-пользователя, а не ослаблять политику безопасности Windows.
 
 **Безопасность:** гостевая запись без пароля допустима только в доверенной LAN. Не открывайте TCP 445 в интернет. Устаревшая версия `ksmbd` в OpenWrt 19.07 имеет известные риски безопасности.
 
-<a id="chapter-10"></a>
-## 11. Установка из локальной папки `packages`, если репозиторий недоступен
+<a id="chapter-9"></a>
+## 10. Установка из локальной папки `packages`, если репозиторий недоступен
 
 Если официальный репозиторий OpenWrt не отвечает или в нём отсутствуют нужные версии, используйте подготовленные `.ipk` из папки **`packages`** рядом с инструкцией.
 
