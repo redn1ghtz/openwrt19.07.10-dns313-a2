@@ -269,6 +269,13 @@ Shared Directories -> Add:
 <a id="chapter-9"></a>
 ## 10. Настройка доступа к папке по логину/паролю ksmbd
 
+Установка shadow-useradd:
+
+```bash
+opkg update
+opkg install shadow-useradd
+```
+
 Создаём пользователя Linux:
 
 ```bash
